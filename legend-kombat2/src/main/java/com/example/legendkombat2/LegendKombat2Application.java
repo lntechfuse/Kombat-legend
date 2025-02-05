@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LegendKombat2Application {
 
     public static void main(String[] args) {
-
         SpringApplication.run(LegendKombat2Application.class, args);
     }
 
