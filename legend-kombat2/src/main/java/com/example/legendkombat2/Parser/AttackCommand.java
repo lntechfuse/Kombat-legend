@@ -1,16 +1,17 @@
 package com.example.legendkombat2.Parser;
 
-class AttackCommand implements Command {
-    private final String direction;
-    private final Expression cost;
+// AttackCommand class implements ActionCommand
+public class AttackCommand implements Command {
+    private String direction;
+    private Expression expression;
 
-    public AttackCommand(String direction, Expression cost) {
+    public AttackCommand(String direction, Expression expression) {
         this.direction = direction;
-        this.cost = cost;
+        this.expression = expression;
     }
 
     @Override
     public void execute() {
-        System.out.println("Attack " + direction + " with cost " + cost.evaluate());
+        System.out.println("Attacking in direction: " + direction + " with expression value: " + expression);
     }
 }

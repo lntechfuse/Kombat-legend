@@ -1,7 +1,10 @@
 package com.example.legendkombat2.Parser;
 
-interface Command extends Statement {
+public interface Command extends Statement {
+    // method execute() สำหรับ Command
+    void execute();
 }
+
 
 
 

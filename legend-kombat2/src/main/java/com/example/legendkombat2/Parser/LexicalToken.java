@@ -3,7 +3,7 @@ package com.example.legendkombat2.Parser;
 
 public class LexicalToken {
     public enum Type {
-        LEFT_PAREN, RIGHT_PAREN, IDENTIFIER, OPERATOR, NUMBER, EOF
+        LEFT_PAREN, RIGHT_PAREN, IDENTIFIER, OPERATOR, NUMBER, EOF,KEYWORD,LEFT_BRACE,RIGHT_BRACE
     }
 
     private Type type;

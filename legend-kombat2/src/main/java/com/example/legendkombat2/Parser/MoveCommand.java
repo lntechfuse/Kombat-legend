@@ -1,7 +1,8 @@
 package com.example.legendkombat2.Parser;
 
-class MoveCommand implements Command {
-    private final String direction;
+// MoveCommand class implements ActionCommand
+public class MoveCommand implements Command {
+    private String direction;
 
     public MoveCommand(String direction) {
         this.direction = direction;
@@ -9,6 +10,6 @@ class MoveCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Move " + direction);
+        System.out.println("Moving " + direction);
     }
 }
