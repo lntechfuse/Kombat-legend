@@ -5,7 +5,6 @@ public class BinaryExpression implements Expression {
     private String operator;
     private Expression right;
 
-    // Constructor: (Expression left, String operator, Expression right)
     public BinaryExpression(Expression left, String operator, Expression right) {
         this.left = left;
         this.operator = operator;
@@ -14,9 +13,8 @@ public class BinaryExpression implements Expression {
 
     @Override
     public int evaluate() {
-        int leftValue = left.evaluate();
-        int rightValue = right.evaluate();
-
+        int leftValue = left.evaluate();  // สมมติว่า evaluate() ของ Expression จะคืนค่า int
+        int rightValue = right.evaluate(); // เช่นเดียวกัน
         switch (operator) {
             case "+":
                 return leftValue + rightValue;
@@ -27,9 +25,7 @@ public class BinaryExpression implements Expression {
             case "/":
                 return leftValue / rightValue;
             default:
-                throw new UnsupportedOperationException("Operator " + operator + " not supported.");
+                throw new RuntimeException("Unknown operator: " + operator);
         }
     }
 }
-
-

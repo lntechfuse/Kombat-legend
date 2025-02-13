@@ -12,6 +12,21 @@ public class AttackCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Attacking in direction: " + direction + " with expression value: " + expression);
+        // logic สำหรับการโจมตี
+        System.out.println("Shoot " + direction + " with expression: " + expression);
+    }
+
+    // สร้าง getter method สำหรับ direction
+    public String getDirection() {
+        return direction;
+    }
+
+    // สร้าง getter method สำหรับ expression
+    public Expression getExpression() {
+        return expression;
     }
 }
+
+
+
+

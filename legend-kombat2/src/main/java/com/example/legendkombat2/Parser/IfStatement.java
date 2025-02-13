@@ -1,14 +1,22 @@
 package com.example.legendkombat2.Parser;
 
-class IfStatement implements Statement {
-    private final Expression condition;
-    private final Statement thenStatement;
-    private final Statement elseStatement;
+public class IfStatement implements Statement {
+    private Expression condition;
+    private Statement thenStatement;
+    private Statement elseStatement;
 
     public IfStatement(Expression condition, Statement thenStatement, Statement elseStatement) {
         this.condition = condition;
         this.thenStatement = thenStatement;
         this.elseStatement = elseStatement;
+    }
+
+    public Statement getThenStatement() {
+        return thenStatement; // เพิ่ม getter เพื่อให้เข้าถึง thenStatement
+    }
+
+    public Statement getElseStatement() {
+        return elseStatement; // เพิ่ม getter เพื่อให้เข้าถึง elseStatement
     }
 
     @Override
@@ -20,4 +28,7 @@ class IfStatement implements Statement {
         }
     }
 }
+
+
+
 // IfStatement class (การใช้เงื่อนไข if)

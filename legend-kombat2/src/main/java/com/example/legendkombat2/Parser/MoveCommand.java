@@ -10,6 +10,12 @@ public class MoveCommand implements Command {
 
     @Override
     public void execute() {
-        System.out.println("Moving " + direction);
+        // logic สำหรับการเคลื่อนที่
+        System.out.println("Move " + direction);
+    }
+
+    // สร้าง getter method สำหรับ direction
+    public String getDirection() {
+        return direction;
     }
 }

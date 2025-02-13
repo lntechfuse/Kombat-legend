@@ -1,19 +1,24 @@
 package com.example.legendkombat2.Parser;
 
-class WhileStatement implements Statement {
-    private final Expression condition;
-    private final Statement statement;
+public class WhileStatement implements Statement {
+    private Expression condition;
+    private Statement body;
 
-    public WhileStatement(Expression condition, Statement statement) {
+    public WhileStatement(Expression condition, Statement body) {
         this.condition = condition;
-        this.statement = statement;
+        this.body = body;
+    }
+
+    public Statement getBody() {
+        return body; // เพิ่ม getter เพื่อให้เข้าถึง body
     }
 
     @Override
     public void execute() {
-        while (condition.evaluate() != 0) {
-            statement.execute();
+        while (condition.evaluate() != 0) { // สมมติว่า evaluate() คืนค่า int
+            body.execute();
         }
     }
 }
+
 // WhileStatement class (การวนลูป while)
