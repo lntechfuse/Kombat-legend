@@ -2,13 +2,15 @@ package com.example.legendkombat2.Parser;
 
 class StatementFactory {
     public static Statement createStatement(String type, String variable, Expression expression) {
-        if ("Assignment".equals(type)) {
-            return new AssignmentStatement(variable, expression);
-        } else if ("Move".equals(type)) {
-            return new MoveCommand(variable);
-        } else if ("Attack".equals(type)) {
-            return new AttackCommand(variable, expression);
+        switch (type) {
+            case "Assignment":
+                return new AssignmentStatement(variable, expression);
+            case "Move":
+                return new MoveCommand(variable);
+            case "Attack":
+                return new AttackCommand(variable, expression);
+            default:
+                throw new IllegalArgumentException("Unknown statement type: " + type);
         }
-        return null;
     }
 }

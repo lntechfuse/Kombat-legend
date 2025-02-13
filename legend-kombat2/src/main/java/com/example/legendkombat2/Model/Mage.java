@@ -29,4 +29,5 @@ public class Mage implements Minion {
     public int getPrice() {
         return price;
     }
+
 }

@@ -76,5 +76,59 @@ public class ParserTest {
         assertEquals("x", assignmentStatement.getVariable());
         assertTrue(assignmentStatement.getExpression() instanceof NumberExpression);
     }
+
+    @Test
+    public void testSyntaxError() {
+        // Simulating incorrect syntax "move unknown_direction"
+        String input = "move unknown_direction";
+        Tokenizer tokenizer = new Tokenizer(input);
+        Parser parser = new Parser(tokenizer);
+
+        // Expecting an exception due to invalid direction
+        assertThrows(IllegalArgumentException.class, parser::parse);
+    }
+
+    @Test
+    public void testBlockStatement() {
+        // Simulating input for the block statement "{ move up move down }"
+        String input = "{ move up move down }";
+        Tokenizer tokenizer = new Tokenizer(input);
+        Parser parser = new Parser(tokenizer);
+        Statement statement = parser.parse();
+
+        // Verify that the statement is of type BlockStatement
+        assertTrue(statement instanceof BlockStatement);
+        BlockStatement blockStatement = (BlockStatement) statement;
+
+        // Ensure the block contains two statements
+        assertEquals(2, blockStatement.getStatements().size());
+        assertTrue(blockStatement.getStatements().get(0) instanceof MoveCommand);
+        assertTrue(blockStatement.getStatements().get(1) instanceof MoveCommand);
+    }
+
+    @Test
+    public void testComplexExpression() {
+        // Simulating input for the assignment "x = (y + 2) * 3"
+        String input = "x = (y + 2) * 3";
+        Tokenizer tokenizer = new Tokenizer(input);
+        Parser parser = new Parser(tokenizer);
+        Statement statement = parser.parse();
+
+        // Verify that the statement is of type AssignmentStatement
+        assertTrue(statement instanceof AssignmentStatement);
+        AssignmentStatement assignmentStatement = (AssignmentStatement) statement;
+        assertEquals("x", assignmentStatement.getVariable());
+
+        // Verify the expression structure
+        assertTrue(assignmentStatement.getExpression() instanceof BinaryExpression);
+        BinaryExpression multiplyExpr = (BinaryExpression) assignmentStatement.getExpression();
+        assertEquals("*", multiplyExpr.getOperator());
+
+        // Verify left operand (y + 2)
+        assertTrue(multiplyExpr.getLeft() instanceof BinaryExpression);
+        BinaryExpression addExpr = (BinaryExpression) multiplyExpr.getLeft();
+        assertEquals("+", addExpr.getOperator());
+    }
+
 }
 

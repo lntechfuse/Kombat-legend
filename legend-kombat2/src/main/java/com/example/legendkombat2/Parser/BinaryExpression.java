@@ -28,4 +28,14 @@ public class BinaryExpression implements Expression {
                 throw new RuntimeException("Unknown operator: " + operator);
         }
     }
+
+    public String getOperator() {
+        return operator;
+    }
+    public Expression getLeft() {
+        return left;
+    }
+    public Expression getRight() {
+        return right;
+    }
 }

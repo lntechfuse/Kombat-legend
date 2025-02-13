@@ -130,34 +130,6 @@ public class Parser {
     }
 
 
-
-    private Command ActionCommand() {
-        String command = currentToken.getValue();
-        consume(LexicalToken.Type.KEYWORD); // 'done' or 'move' or 'shoot'
-        if (command.equals("move")) {
-            String direction = currentToken.getValue();
-            consume(LexicalToken.Type.KEYWORD); // Direction (e.g., "up", "down", etc.)
-            return new MoveCommand(direction);
-        } else if (command.equals("shoot")) {
-            String direction = currentToken.getValue();
-            consume(LexicalToken.Type.KEYWORD); // Direction (e.g., "up", "down", etc.)
-            Expression expression = expression();
-            return new AttackCommand(direction, expression);
-        } else if (command.equals("done")) {
-            // If the command is "done", create a generic ActionCommand
-            return new ActionCommand() {
-                @Override
-                public void execute() {
-                    System.out.println("Action completed.");
-                }
-            };
-        } else {
-            throw new RuntimeException("Unexpected command: " + command);
-        }
-    }
-
-
-
     private void consume(LexicalToken.Type type) {
         if (currentToken.getType() == type) {
             currentToken = tokenizer.nextToken();

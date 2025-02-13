@@ -15,5 +15,9 @@ class BlockStatement implements Statement {
             statement.execute();
         }
     }
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
 }
 // BlockStatement class (กลุ่มของ Statement)
