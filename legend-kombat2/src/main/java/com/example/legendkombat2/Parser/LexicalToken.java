@@ -15,6 +15,7 @@ public class LexicalToken {
     }
 
     public Type getType() {
+
         return type;
     }
 

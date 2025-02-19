@@ -2,72 +2,92 @@ package com.example.legendkombat2.GameController;
 
 import com.example.legendkombat2.Map.Map;
 import com.example.legendkombat2.Map.MapImpl;
-import com.example.legendkombat2.Map.Hextile;
-import com.example.legendkombat2.Model.Player;
 import com.example.legendkombat2.Model.*;
+import com.example.legendkombat2.Parser.Tokenizer;
+import com.example.legendkombat2.Parser.Parser;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/game")
 public class GameController {
+    private List<Player> players;
+    private Map map;
 
-    private final Map gameMap = new MapImpl();
-    private final Player player1 = new Playerlmpl("Player 1", 1000, 5);
-    private final Player player2 = new Playerlmpl("Player 2", 1000, 5);
-    private final JsonParser jsonParser = new JsonParserImpl();
+    public GameController() {
+        players = new ArrayList<>();
+        map = new MapImpl(); // สร้างแผนที่
+     }
 
-    @GetMapping("/buyArea/{playerId}/{row}/{col}")
-    public String buyArea(@PathVariable int playerId, @PathVariable int row, @PathVariable int col) {
-        Hextile tileToBuy = gameMap.getTile(row, col);
-        Player player = (playerId == 1) ? player1 : player2;
-        player.buyArea(tileToBuy);
-        return player.getName() + " bought area at (" + row + "," + col + ")";
+    @PostMapping("/start-game")
+    public ResponseEntity<String> startGame(@RequestBody List<PlayerRequest> playerRequests) {
+
+        int initialBudget = 100; // เปลี่ยนตามที่ต้องการ
+        int initialMinionsLeft = 3; // เปลี่ยนตามที่ต้องการ
+
+        // รับข้อมูลผู้เล่นและเริ่มเกม
+        for (PlayerRequest request : playerRequests) {
+            Player player = new Playerlmpl(request.getPlayerId(), request.getName(), initialBudget, initialMinionsLeft, request.getMinions());
+            players.add(player);
+        }
+
+        // สร้างพื้นที่เกม
+        setupGameArea();
+
+        return ResponseEntity.ok("Game Started Successfully");
     }
 
-    @PostMapping("/buyMinion/{playerId}")
-    public String buyMinion(@PathVariable int playerId, @RequestBody String minionJson) {
-        try {
-            MinionDTO minionDTO = jsonParser.fromJson(minionJson, MinionDTO.class);
-            Player player = (playerId == 1) ? player1 : player2;
-            Minion minion = createMinionFromDTO(minionDTO);
-            player.buyMinion(minion);
-            return player.getName() + " bought a " + minion.getType();
-        } catch (IOException e) {
-            return "Error parsing JSON: " + e.getMessage();
+    private void setupGameArea() {
+        // กำหนดพื้นที่ว่างในแผนที่
+        for (Player player : players) {
+            map.setupFreeSpaces(player);
         }
     }
 
-    @GetMapping("/battle")
-    public String battle() {
-        StringBuilder battleLog = new StringBuilder();
-        for (int i = 0; i < player1.getMinions().size(); i++) {
-            if (i < player2.getMinions().size()) {
-                Minion m1 = player1.getMinions().get(i);
-                Minion m2 = player2.getMinions().get(i);
-                battleLog.append(m1.getType()).append(" vs ").append(m2.getType()).append("\n");
-                m1.attack(m2);
-                if (m2.getHp() > 0) {
-                    m2.attack(m1);
-                }
+    @PostMapping("/submit-strategy")
+    public ResponseEntity<StrategyResponse> submitStrategy(@RequestBody StrategyRequest request) {
+        // สร้าง Tokenizer
+        Tokenizer tokenizer = new Tokenizer(request.getStrategy());
+
+        // ส่ง Strategy ไปยัง Parser เพื่อตรวจสอบ
+        Parser parser = new Parser(tokenizer);
+        boolean isValid = parser.validate(request.getStrategy());
+
+        if (!isValid) {
+            return ResponseEntity.badRequest().body(new StrategyResponse("Syntax Error in Strategy", null));
+        }
+
+        // ถ้าผ่านให้ส่งข้อมูลไปยัง Game Logic
+        processGameLogic(request);
+
+        // สร้าง ResponseDTO
+        StrategyResponse response = new StrategyResponse("Strategy Submitted Successfully", getGameStatus());
+        return ResponseEntity.ok(response);
+    }
+
+    private void processGameLogic(StrategyRequest request) {
+        // ประมวลผลเกมตาม Strategy ที่ผู้เล่นกำหนด
+        Player player = findPlayerById(request.getPlayerId());
+        if (player != null) {
+            // ตัวอย่างการดำเนินการตามกลยุทธ์
+            // ทำการประมวลผลตามที่ผู้เล่นได้กำหนดในกลยุทธ์
+        }
+    }
+
+    private Player findPlayerById(String playerId) {
+        for (Player player : players) {
+            if (player.getPlayerId().equals(playerId)) {
+                return player;
             }
         }
-        gameMap.updateMap();
-        return battleLog.toString();
+        return null; // หากไม่พบผู้เล่น
     }
 
-    private Minion createMinionFromDTO(MinionDTO minionDTO) {
-        switch (minionDTO.getType().toLowerCase()) {
-            case "warrior":
-                return new Warrior();
-            case "tank":
-                return new Tank();
-            case "mage":
-                return new Mage();
-            default:
-                throw new IllegalArgumentException("Invalid minion type");
-        }
+    private GameStatus getGameStatus() {
+        // คืนค่า GameStatus ปัจจุบัน
+        return new GameStatus();
     }
 }
-

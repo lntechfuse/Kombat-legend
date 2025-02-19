@@ -4,11 +4,13 @@ public class InfoExpression implements Expression {
     private String info;
 
     public InfoExpression(String info) {
+
         this.info = info;
     }
 
     @Override
     public String toString() {
+
         return info; // แสดงค่าของ InfoExpression
     }
 

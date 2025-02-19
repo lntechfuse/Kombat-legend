@@ -5,6 +5,7 @@ class ArithExprFactory {
         if (token.getType() == LexicalToken.Type.NUMBER) {
             return new NumberExpression(Integer.parseInt(token.getValue()));
         }
+
         return null;
     }
 

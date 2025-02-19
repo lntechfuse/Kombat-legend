@@ -33,9 +33,11 @@ public class BinaryExpression implements Expression {
         return operator;
     }
     public Expression getLeft() {
+
         return left;
     }
     public Expression getRight() {
+
         return right;
     }
 }

@@ -16,6 +16,6 @@ public interface Hextile {
     int getCol();
 
     // เพิ่มเมธอดสำหรับการจัดการ Minion
-    Minion getMinion();    // ดึง Minion ที่อยู่ในช่อง
-    void setMinion(Minion minion);  // ตั้ง Minion ในช่อง
+    Minion getMinion();     // ดึง Minion ที่อยู่ในช่อง
+    void setMinion(Minion minion);   // ตั้ง Minion ในช่อง
 }

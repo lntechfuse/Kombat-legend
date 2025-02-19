@@ -5,4 +5,3 @@ public interface Expression {
 }
 
 
-// Expression Interface (อินเตอร์เฟซสำหรับคำนวณ)

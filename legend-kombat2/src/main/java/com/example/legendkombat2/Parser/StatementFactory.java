@@ -3,6 +3,7 @@ package com.example.legendkombat2.Parser;
 class StatementFactory {
     public static Statement createStatement(String type, String variable, Expression expression) {
         switch (type) {
+
             case "Assignment":
                 return new AssignmentStatement(variable, expression);
             case "Move":

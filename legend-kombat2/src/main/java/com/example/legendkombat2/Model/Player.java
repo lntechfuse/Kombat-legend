@@ -11,4 +11,18 @@ public interface Player {
     String getName();
 
     List<Minion> getMinions();
+
+    int getBudget();
+
+    void setBudget(int budget);
+
+    int getMinionsLeft();
+
+    void setMinionsLeft(int minionsLeft);
+
+    List<Hextile> getOwnedTiles();
+
+    String getPlayerId();
+
+    void setupFreeSpaces(Player player);
 }

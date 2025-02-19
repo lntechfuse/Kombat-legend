@@ -12,10 +12,12 @@ public class IfStatement implements Statement {
     }
 
     public Statement getThenStatement() {
+
         return thenStatement; // เพิ่ม getter เพื่อให้เข้าถึง thenStatement
     }
 
     public Statement getElseStatement() {
+
         return elseStatement; // เพิ่ม getter เพื่อให้เข้าถึง elseStatement
     }
 

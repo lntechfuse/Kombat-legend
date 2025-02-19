@@ -5,6 +5,7 @@ public class MoveCommand implements Command {
     private String direction;
 
     public MoveCommand(String direction) {
+
         this.direction = direction;
     }
 
@@ -16,6 +17,7 @@ public class MoveCommand implements Command {
 
     // สร้าง getter method สำหรับ direction
     public String getDirection() {
+
         return direction;
     }
 }

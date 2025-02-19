@@ -18,11 +18,13 @@ public class AttackCommand implements Command {
 
     // สร้าง getter method สำหรับ direction
     public String getDirection() {
+
         return direction;
     }
 
     // สร้าง getter method สำหรับ expression
     public Expression getExpression() {
+
         return expression;
     }
 }

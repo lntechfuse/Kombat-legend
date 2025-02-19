@@ -12,7 +12,15 @@ public class Parser {
     }
 
     public Statement parse() {
+
         return statement();
+    }
+
+    public boolean validate(String strategy) {
+        // ตรวจสอบ Syntax ของ Strategy ที่ส่งมา
+        // หากผ่านให้คืนค่า true
+        // หากไม่ผ่านให้คืนค่า false
+        return true; // ตัวอย่างให้ผ่านทุกอย่าง
     }
 
     private Statement statement() {
@@ -30,7 +38,6 @@ public class Parser {
             throw new RuntimeException("Unexpected token: " + currentToken.getValue());
         }
     }
-
 
 
     private Statement actionCommand() {

@@ -52,4 +52,3 @@ public class Tokenizer {
 }
 
 
-// Tokenizer class (แยกสตริงเป็น token)

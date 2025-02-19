@@ -18,7 +18,9 @@ public class WhileStatement implements Statement {
         while (condition.evaluate() != 0) { // สมมติว่า evaluate() คืนค่า int
             body.execute();
         }
+
     }
+
 }
 
 // WhileStatement class (การวนลูป while)

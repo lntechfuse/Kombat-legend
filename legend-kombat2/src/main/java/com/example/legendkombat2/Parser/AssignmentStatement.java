@@ -19,6 +19,6 @@ public class AssignmentStatement implements Statement {
 
     @Override
     public void execute() {
-        // การดำเนินการที่เกี่ยวข้อง
+
     }
 }

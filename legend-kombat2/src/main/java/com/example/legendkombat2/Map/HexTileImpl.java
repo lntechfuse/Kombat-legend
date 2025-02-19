@@ -1,6 +1,6 @@
 package com.example.legendkombat2.Map;
 
-import com.example.legendkombat2.Model.Minion; // อย่าลืม import Minion
+import com.example.legendkombat2.Model.Minion;
 
 public class HexTileImpl implements Hextile {
     private int row;
@@ -8,7 +8,7 @@ public class HexTileImpl implements Hextile {
     private boolean isOccupied;
     private boolean isPurchasable;
     private int price;
-    private Minion minion; // ฟิลด์ใหม่สำหรับเก็บ Minion
+    private Minion minion; // ตัวแปรเพื่อจัดการ Minion ในช่องนี้
 
     public HexTileImpl(int row, int col, boolean isOccupied, boolean isPurchasable, int price) {
         this.row = row;
@@ -16,7 +16,7 @@ public class HexTileImpl implements Hextile {
         this.isOccupied = isOccupied;
         this.isPurchasable = isPurchasable;
         this.price = price;
-        this.minion = null; // เริ่มต้นด้วยการไม่มี Minion ในช่องนี้
+        this.minion = null;  // เริ่มต้นด้วยการไม่มี Minion ในช่องนี้
     }
 
     @Override
@@ -56,5 +56,6 @@ public class HexTileImpl implements Hextile {
 
     public void setMinion(Minion minion) {
         this.minion = minion;
+        this.isOccupied = (minion != null); // ตั้งค่า isOccupied เป็น true ถ้ามี Minion
     }
 }
