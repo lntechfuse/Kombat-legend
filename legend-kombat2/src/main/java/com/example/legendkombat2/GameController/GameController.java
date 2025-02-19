@@ -83,7 +83,7 @@ public class GameController {
                 return player;
             }
         }
-        return null; // หากไม่พบผู้เล่น
+        return null;
     }
 
     private GameStatus getGameStatus() {
