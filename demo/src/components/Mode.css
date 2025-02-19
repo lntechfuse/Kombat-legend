@@ -1,0 +1,43 @@
+/* Global Styles */
+.container {
+    background-image: url("C:\Users\User\Desktop\Kombat-legend\demo\src\images\mode.png"); /* ใช้ path แบบ relative */
+    background-size: cover;  /* ปรับให้ภาพเต็มจอ */
+    background-position: center; /* จัดตำแหน่งภาพให้อยู่ตรงกลาง */
+    background-repeat: no-repeat; /* ป้องกันการซ้ำของภาพ */
+    position: fixed; /* ให้ background เต็มหน้าจอ */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Button Group */
+.button-group {
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.button {
+    width: 250px;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid #ff4081;
+    background:#1E1E1E;
+    color: #ff4081;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.button:hover {
+    background: #ff4081;
+    color: white;
+}
+
+
