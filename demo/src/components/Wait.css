@@ -1,0 +1,35 @@
+.wait-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282c34;
+    color: white;
+    text-align: center;
+  }
+  
+  .wait-container h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .wait-container p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .back-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #ff4500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #ff6347;
+  }
+  

@@ -1,10 +1,10 @@
-/* Global Styles */
+
 .container {
-    background-image: url("C:\Users\User\Desktop\Kombat-legend\demo\src\images\mode.png"); /* ใช้ path แบบ relative */
-    background-size: cover;  /* ปรับให้ภาพเต็มจอ */
-    background-position: center; /* จัดตำแหน่งภาพให้อยู่ตรงกลาง */
-    background-repeat: no-repeat; /* ป้องกันการซ้ำของภาพ */
-    position: fixed; /* ให้ background เต็มหน้าจอ */
+    background-image: url('C:\Users\User\Kombat-legend-1\demo\src\images\mode.png');
+    background-size: cover;  
+    background-position: center; 
+    background-repeat: no-repeat; 
+    position: fixed; 
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -14,7 +14,7 @@
     text-align: center;
 }
 
-/* Button Group */
+
 .button-group {
     margin-top: 120px;
     display: flex;
@@ -23,9 +23,9 @@
 }
 
 .button {
-    width: 250px;
+    width: 500px;
     padding: 15px;
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: bold;
     border-radius: 5px;
     border: 2px solid #ff4081;

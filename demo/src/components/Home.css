@@ -3,8 +3,7 @@
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-image: url('C:\Users\User\Desktop\Kombat-legend\demo\src\images\home.png');
-  
+    background-image: url('C:\Users\User\Kombat-legend-1\demo\src\images\home.png');  /* ✅ ใช้พาธแบบเว็บ */
     background-size: cover;  
     background-position: center center;  
     background-repeat: no-repeat;  
@@ -13,11 +12,10 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;  
-  }
+}
   
-  
-  /* Start Button */
-  .start-button {
+/* Start Button */
+.start-button {
     position: absolute;
     left: 50%;
     top: 80%;
@@ -32,11 +30,12 @@
     text-align: center;
     line-height: 80px;
     transform: translateX(-50%);
-  }
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
   
-  .start-button:hover {
+.start-button:hover {
     background-color: #C6386D;
     color: black;
     transform: translateX(-50%) scale(1.05);
-  }
-  
+}
