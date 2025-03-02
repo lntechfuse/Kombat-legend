@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Select.css";
 
@@ -15,7 +15,40 @@ const Select: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-  const [showModal, setShowModal] = useState(false); // สร้าง State สำหรับ Modal
+  const [showModal, setShowModal] = useState(false);
+
+  // เพิ่ม useRef สำหรับเสียงต่าง ๆ
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+  const clickSoundRef = useRef<HTMLAudioElement | null>(null);
+  const hoverSoundRef = useRef<HTMLAudioElement | null>(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+  useEffect(() => {
+    bgMusicRef.current = new Audio("/sounds/bg-music.mp3");
+    bgMusicRef.current.loop = true;
+    bgMusicRef.current.volume = 0.5;
+
+    clickSoundRef.current = new Audio("/sounds/click.mp3");
+    hoverSoundRef.current = new Audio("/sounds/hover.mp3");
+
+    // ให้เพลงเล่นหลังจากที่ผู้ใช้โต้ตอบ
+    const enableAudio = () => {
+      if (!isMusicPlaying && bgMusicRef.current) {
+        bgMusicRef.current.play().catch(err => console.log("Autoplay blocked:", err));
+        setIsMusicPlaying(true);
+      }
+      document.removeEventListener("click", enableAudio);
+    };
+
+    document.addEventListener("click", enableAudio);
+
+    return () => {
+      document.removeEventListener("click", enableAudio);
+      if (bgMusicRef.current) {
+        bgMusicRef.current.pause();
+      }
+    };
+  }, [isMusicPlaying]);
 
   useEffect(() => {
     if (location.state?.resetFromMode) {
@@ -30,9 +63,24 @@ const Select: React.FC = () => {
     }
   }, [location.state]);
 
+  const playClickSound = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.currentTime = 0;
+      clickSoundRef.current.play();
+    }
+  };
+
+  const playHoverSound = () => {
+    if (hoverSoundRef.current) {
+      hoverSoundRef.current.currentTime = 0;
+      hoverSoundRef.current.play();
+    }
+  };
+
   const handleSelect = (role: string, image: string) => {
     if (selectedRoles.includes(role)) return;
 
+    playClickSound();
     const updatedSelectedRoles = [...selectedRoles, role];
     setSelectedRoles(updatedSelectedRoles);
     localStorage.setItem("selectedRoles", JSON.stringify(updatedSelectedRoles));
@@ -41,19 +89,22 @@ const Select: React.FC = () => {
   };
 
   const handleReset = () => {
+    playClickSound();
     localStorage.removeItem("selectedRoles");
     setSelectedRoles([]);
   };
 
   const handleBack = () => {
+    playClickSound();
     navigate("/mode", { state: { resetFromSelect: true } });
   };
 
   const handleConfirm = () => {
     if (selectedRoles.length === 0) {
-      setShowModal(true); // แสดง Modal แทน Alert
+      setShowModal(true);
       return;
     }
+    playClickSound();
     navigate("/wait");
   };
 
@@ -74,6 +125,7 @@ const Select: React.FC = () => {
             <p className="character-name">{role}</p>
             <button
               className="select-button"
+              onMouseEnter={playHoverSound}
               onClick={() => handleSelect(role, images[index])}
               disabled={selectedRoles.includes(role)}
             >
@@ -84,12 +136,11 @@ const Select: React.FC = () => {
       </div>
 
       <div className="button-container">
-        <button className="back-button" onClick={handleBack}>BACK</button>
-        <button className="reset-button" onClick={handleReset}>RESET</button>
-        <button className="confirm-button" onClick={handleConfirm}>CONFIRM</button>
+        <button className="back-button" onMouseEnter={playHoverSound} onClick={handleBack}>BACK</button>
+        <button className="reset-button" onMouseEnter={playHoverSound} onClick={handleReset}>RESET</button>
+        <button className="confirm-button" onMouseEnter={playHoverSound} onClick={handleConfirm}>CONFIRM</button>
       </div>
 
-      {/* Custom Modal แจ้งเตือน */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal">

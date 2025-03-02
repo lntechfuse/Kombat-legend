@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Strategy.css";
 
@@ -11,16 +11,64 @@ const StrategyForm: React.FC = () => {
   const [strategy, setStrategy] = useState("");
   const [defense, setDefense] = useState("");
 
+  // สร้าง useRef สำหรับเสียง
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+  const clickSoundRef = useRef<HTMLAudioElement | null>(null);
+  const hoverSoundRef = useRef<HTMLAudioElement | null>(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
+  useEffect(() => {
+    bgMusicRef.current = new Audio("/sounds/bg-music.mp3");
+    bgMusicRef.current.loop = true;
+    bgMusicRef.current.volume = 0.5;
+
+    clickSoundRef.current = new Audio("/sounds/click.mp3");
+    hoverSoundRef.current = new Audio("/sounds/hover.mp3");
+
+    // ให้เพลงเล่นหลังจากที่ผู้ใช้โต้ตอบ
+    const enableAudio = () => {
+      if (!isMusicPlaying && bgMusicRef.current) {
+        bgMusicRef.current.play().catch(err => console.log("Autoplay blocked:", err));
+        setIsMusicPlaying(true);
+      }
+      document.removeEventListener("click", enableAudio);
+    };
+
+    document.addEventListener("click", enableAudio);
+
+    return () => {
+      document.removeEventListener("click", enableAudio);
+      if (bgMusicRef.current) {
+        bgMusicRef.current.pause();
+      }
+    };
+  }, [isMusicPlaying]);
+
+  const playClickSound = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.currentTime = 0;
+      clickSoundRef.current.play();
+    }
+  };
+
+  const playHoverSound = () => {
+    if (hoverSoundRef.current) {
+      hoverSoundRef.current.currentTime = 0;
+      hoverSoundRef.current.play();
+    }
+  };
+
   const handleSelect = () => {
+    playClickSound();
     localStorage.setItem("playerName", name); // เก็บชื่อไว้ใน localStorage
     navigate("/select", { state: { name } }); // ส่งค่าไปที่หน้า Select
   };
-  
+
   return (
     <div className="container">
       <div className="form-box">
         <div className="avatar-section">
-          {image && <img src={image} alt={role} className="avatar" />} 
+          {image && <img src={image} alt={role} className="avatar" />}
           <input
             type="text"
             placeholder="ENTER YOUR NAME"
@@ -28,7 +76,11 @@ const StrategyForm: React.FC = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button className="select-button" onClick={handleSelect}>
+          <button
+            className="select-button"
+            onMouseEnter={playHoverSound}
+            onClick={handleSelect}
+          >
             SELECT
           </button>
         </div>
