@@ -1,6 +1,6 @@
 
 .container {
-    background-image: url('C:\Users\User\Kombat-legend-1\demo\src\images\mode.png');
+    background-image: url('../images/mode.png');
     background-size: cover;  
     background-position: center; 
     background-repeat: no-repeat; 

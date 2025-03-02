@@ -20,10 +20,15 @@ public class GameController {
     public GameController() {
         players = new ArrayList<>();
         map = new MapImpl(); // สร้างแผนที่
-     }
+    }
 
     @PostMapping("/start-game")
     public ResponseEntity<String> startGame(@RequestBody List<PlayerRequest> playerRequests) {
+
+        // ตรวจสอบว่า Minion ที่เลือกเหมือนกันหรือไม่
+        if (!validateMinionSelection(playerRequests)) {
+            return ResponseEntity.badRequest().body("Both teams must choose the same Minions.");
+        }
 
         int initialBudget = 100; // เปลี่ยนตามที่ต้องการ
         int initialMinionsLeft = 3; // เปลี่ยนตามที่ต้องการ
@@ -72,7 +77,6 @@ public class GameController {
         // ประมวลผลเกมตาม Strategy ที่ผู้เล่นกำหนด
         Player player = findPlayerById(request.getPlayerId());
         if (player != null) {
-            // ตัวอย่างการดำเนินการตามกลยุทธ์
             // ทำการประมวลผลตามที่ผู้เล่นได้กำหนดในกลยุทธ์
         }
     }
@@ -89,5 +93,33 @@ public class GameController {
     private GameStatus getGameStatus() {
         // คืนค่า GameStatus ปัจจุบัน
         return new GameStatus();
+    }
+
+    /**
+     * ตรวจสอบว่าผู้เล่นทุกคนเลือก Minion เหมือนกันหรือไม่
+     */
+    private boolean validateMinionSelection(List<PlayerRequest> playerRequests) {
+        if (playerRequests.isEmpty()) return false;
+
+        // ดึงชื่อ Minion ของผู้เล่นคนแรกมาใช้เป็นมาตรฐาน
+        List<String> firstPlayerMinionNames = getMinionNames(playerRequests.get(0).getMinions());
+
+        for (PlayerRequest request : playerRequests) {
+            if (!getMinionNames(request.getMinions()).equals(firstPlayerMinionNames)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * ฟังก์ชันช่วยแปลง List<Minion> เป็น List<String> (ชื่อ Minion)
+     */
+    private List<String> getMinionNames(List<Minion> minions) {
+        List<String> minionNames = new ArrayList<>();
+        for (Minion minion : minions) {
+            minionNames.add(minion.getName());
+        }
+        return minionNames;
     }
 }

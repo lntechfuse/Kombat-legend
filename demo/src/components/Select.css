@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('C:/Users/User/Kombat-legend-1/demo/src/images/mode.png');
+    background-image: url('../images/mode.png');
     background-size: cover; /* ปรับให้ภาพเต็มจอ */
     background-position: center; /* จัดให้อยู่ตรงกลาง */
     background-repeat: no-repeat; /* ป้องกันการทำซ้ำของภาพ */
